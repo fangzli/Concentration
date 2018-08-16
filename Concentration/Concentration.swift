@@ -10,9 +10,7 @@ import Foundation
 
 class Concentration {
     var cards = [Card]()
-    // one card facing up
-    // two card facing up, not match
-    // two card facing up, match
+    
     var indexOfOneAndOnlyFaceUpCard: Int?
     
     func chooseCard(at index: Int) {
@@ -34,12 +32,22 @@ class Concentration {
             }
         }
     }
+    
     init(numberOfPairsOfCards: Int) {
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]
         }
         // TODO: Shuffle cards
+        if numberOfPairsOfCards < 2 {
+            return
+        } else {
+            let count = numberOfPairsOfCards*2
+            for i in 0..<(count - 1) {
+                let j = Int(arc4random_uniform(UInt32(count - i))) + i
+                cards.swapAt(i, j)
+            }
+        }
     }
 }
 
